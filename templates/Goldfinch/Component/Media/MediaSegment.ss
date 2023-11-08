@@ -9,17 +9,17 @@
       <div class="mb-2"><strong>Type:</strong> $Type</div>
       <div class="mb-2"><strong>Parameters (json):</strong> $Parameters</div>
       <% if $getSegmentTypeConfig('image') %>
-          <div class="mb-2"><strong>(config param) Image:</strong> true</div>
-          $Image.FitMax(300,150)
+        <div class="mb-2"><strong>(config param) Image:</strong> true</div>
+        $Image.FitMax(300,150)
       <% end_if %>
       <% if $getSegmentTypeConfig('images') %>
-          <div class="mb-2"><strong>(config param) Images:</strong> true</div>
-          <% loop Images %>
-              $FitMax(300,150)
-          <% end_loop %>
+        <div class="mb-2"><strong>(config param) Images:</strong> true</div>
+        <% loop Images %>
+          $FitMax(300,150)
+        <% end_loop %>
       <% end_if %>
       <% loop $ViewJson($Parameters) %>
-          <%-- ... --%>
+        <%-- ... --%>
       <% end_loop %>
     </div>
   </div>
