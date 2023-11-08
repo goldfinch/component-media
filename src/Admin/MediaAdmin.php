@@ -2,14 +2,17 @@
 
 namespace Goldfinch\Component\Media\Admin;
 
+use SilverStripe\Admin\ModelAdmin;
+use JonoM\SomeConfig\SomeConfigAdmin;
 use Goldfinch\Component\Media\Blocks\MediaBlock;
+use SilverStripe\Forms\GridField\GridFieldConfig;
 use Goldfinch\Component\Media\Configs\MediaConfig;
 use Goldfinch\Component\Media\Models\MediaSegment;
-use SilverStripe\Admin\ModelAdmin;
-use SilverStripe\Forms\GridField\GridFieldConfig;
 
 class MediaAdmin extends ModelAdmin
 {
+    use SomeConfigAdmin;
+
     private static $url_segment = 'media';
     private static $menu_title = 'Media';
     private static $menu_icon_class = 'bi-images';
