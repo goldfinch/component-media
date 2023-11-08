@@ -4,7 +4,7 @@
       <h2>Media segment</h2>
       <hr>
       <p>To overwrite this template, create individual file in your theme</p>
-      <div class="mb-3"><code>/templates/Partials/Media/{$Type}.ss</code></div>
+      <div class="mb-3"><code>/templates/Components/Media/{$Type}.ss</code></div>
       <div class="mb-2"><strong>ID:</strong> $ID</div>
       <div class="mb-2"><strong>Type:</strong> $Type</div>
       <div class="mb-2"><strong>Parameters (json):</strong> $Parameters</div>
