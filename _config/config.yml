@@ -1,0 +1,7 @@
+---
+Name: goldfinch-component-media
+---
+
+Goldfinch\Component\Media\Admin\MediaAdmin:
+  extensions:
+    - Goldfinch\Helpers\Extensions\BlocksAdminExtension
