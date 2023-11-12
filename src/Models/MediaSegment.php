@@ -222,7 +222,10 @@ class MediaSegment extends DataObject
             }
 
         }
-        $imageField->end();
+        if ($i > 0)
+        {
+            $imageField->end();
+        }
 
         $i = 0;
         foreach ($this->getSegmentListOfTypes('images') as $key => $state)
@@ -240,7 +243,10 @@ class MediaSegment extends DataObject
                 $i++;
             }
         }
-        $imagesField->end();
+        if ($i > 0)
+        {
+            $imagesField->end();
+        }
 
         return $fields;
     }
