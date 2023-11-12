@@ -22,7 +22,16 @@ Goldfinch\Component\Media\Models\MediaSegment:
       images: true
 ```
 
-2)
+2) 
+
+elements.yml
+
+```
+  allowed_elements:
+    - Goldfinch\Component\Media\Blocks\MediaBlock
+```
+
+3)
 
 app/_schema/media-{segment_type}.json
 ```
@@ -43,7 +52,7 @@ app/_schema/media-{segment_type}.json
   }
 ```
 
-3)
+4)
 
 themes/{theme}/templates/Components/Media/{segment_type}.ss
 
