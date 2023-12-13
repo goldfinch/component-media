@@ -38,7 +38,7 @@ class MediaSegment extends DataObject
 
     private static $many_many_extraFields = [
         'Images' => [
-            'SortOrder' => 'Int',
+            'SortExtra' => 'Int',
         ],
     ];
 
