@@ -53,6 +53,26 @@ class MediaSegment extends DataObject
         'Type' => 'Type',
     ];
 
+    // private static $belongs_to = [];
+    // private static $belongs_many_many = [];
+
+    // private static $default_sort = null;
+    // private static $indexes = null;
+    // private static $casting = [];
+    // private static $defaults = [];
+
+    // private static $field_labels = [];
+    // private static $searchable_fields = [];
+
+    // private static $cascade_deletes = [];
+    // private static $cascade_duplicates = [];
+
+    // * goldfinch/helpers
+    // private static $field_descriptions = [];
+    private static $required_fields = [
+        'Title',
+    ];
+
     public function getSegmentListOfTypes($key = 'label')
     {
         $types = $this->config()->get('segment_types');
@@ -121,24 +141,6 @@ class MediaSegment extends DataObject
             }
         }
     }
-
-    // private static $belongs_to = [];
-    // private static $belongs_many_many = [];
-
-    // private static $default_sort = null;
-    // private static $indexes = null;
-    // private static $casting = [];
-    // private static $defaults = [];
-
-    // private static $field_labels = [];
-    // private static $searchable_fields = [];
-
-    // private static $cascade_deletes = [];
-    // private static $cascade_duplicates = [];
-
-    // * goldfinch/helpers
-    // private static $field_descriptions = [];
-    // private static $required_fields = [];
 
     public function RenderSegmentMedia()
     {
@@ -251,6 +253,15 @@ class MediaSegment extends DataObject
         return $fields;
     }
 
+    public function getCMSFields()
+    {
+        $fields = parent::getCMSFields();
+
+        // ..
+
+        return $fields;
+    }
+
     // public function validate()
     // {
     //     $result = parent::validate();
@@ -274,13 +285,6 @@ class MediaSegment extends DataObject
 
         parent::onBeforeWrite();
     }
-
-    // public function onBeforeDelete()
-    // {
-    //     // ..
-
-    //     parent::onBeforeDelete();
-    // }
 
     // public function canView($member = null)
     // {
