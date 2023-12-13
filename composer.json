@@ -15,6 +15,7 @@
         "silverstripe/admin": "^2.0",
         "goldfinch/helpers": "^1.0",
         "goldfinch/json-editor": "^1.0",
+        "silvershop/silverstripe-hasonefield": "dev-main",
         "jonom/silverstripe-someconfig": "^1.0",
         "dnadesign/silverstripe-elemental": "^5.0"
     },
