@@ -15,7 +15,7 @@ class MediaAdmin extends ModelAdmin
 
     private static $url_segment = 'media';
     private static $menu_title = 'Media';
-    private static $menu_icon_class = 'bi-images';
+    private static $menu_icon_class = 'font-icon-block-carousel';
     // private static $menu_priority = -0.5;
 
     private static $managed_models = [

@@ -5,3 +5,16 @@ Name: goldfinch-component-media
 Goldfinch\Component\Media\Admin\MediaAdmin:
   extensions:
     - Goldfinch\Helpers\Extensions\BlocksAdminExtension
+
+---
+Name: goldfinch-component-media-icon
+Only:
+  moduleexists: 'goldfinch/enchantment'
+---
+
+Goldfinch\Component\Media\Admin\MediaAdmin:
+  menu_icon_class: 'bi-images'
+
+Goldfinch\Component\Media\Blocks\MediaBlock:
+  icon: 'bi-images'
+
