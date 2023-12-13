@@ -253,15 +253,6 @@ class MediaSegment extends DataObject
         return $fields;
     }
 
-    public function getCMSFields()
-    {
-        $fields = parent::getCMSFields();
-
-        // ..
-
-        return $fields;
-    }
-
     // public function validate()
     // {
     //     $result = parent::validate();
