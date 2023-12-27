@@ -9,8 +9,8 @@ use SilverStripe\Forms\DropdownField;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use Goldfinch\JSONEditor\Forms\JSONEditorField;
 use Goldfinch\JSONEditor\ORM\FieldType\DBJSONText;
-use Goldfinch\FocusPointExtra\Forms\UploadFieldWithExtra;
-use Goldfinch\FocusPointExtra\Forms\SortableUploadFieldWithExtra;
+use Goldfinch\ImageEditor\Forms\EditableUploadField;
+use Goldfinch\ImageEditor\Forms\EditableSortableUploadField;
 
 class MediaSegment extends DataObject
 {
@@ -182,10 +182,10 @@ class MediaSegment extends DataObject
                     $this->getSegmentListOfTypes(),
                 ),
                 $imageField = Wrapper::create(
-                    ...UploadFieldWithExtra::create('Image', 'Image', $fields, $this)->getFields(),
+                    ...EditableUploadField::create('Image', 'Image', $fields, $this)->getFields(),
                 ),
                 $imagesField = Wrapper::create(
-                    ...SortableUploadFieldWithExtra::create('Images', 'Images', $fields, $this)->getFields(),
+                    ...EditableSortableUploadField::create('Images', 'Images', $fields, $this)->getFields(),
                 ),
             ]
         );
