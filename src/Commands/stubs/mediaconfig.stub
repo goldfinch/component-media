@@ -1,0 +1,15 @@
+---
+Name: app-{{ class }}
+After: "goldfinch/component-media"
+---
+Goldfinch\Component\Media\Models\Nest\MediaSegment:
+  extensions:
+    - {{ namespace }}\MediaSegmentExtension
+
+Goldfinch\Component\Media\Configs\MediaConfig:
+  extensions:
+    - {{ namespace }}\MediaConfigExtension
+
+Goldfinch\Component\Media\Blocks\MediaBlock:
+  extensions:
+    - {{ namespace }}\MediaBlockExtension

@@ -2,15 +2,10 @@
 
 namespace Goldfinch\Component\Media\Models;
 
-use Goldfinch\Component\Media\Blocks\MediaBlock;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\DropdownField;
-use UncleCheese\DisplayLogic\Forms\Wrapper;
-use Goldfinch\JSONEditor\Forms\JSONEditorField;
+use Goldfinch\Component\Media\Blocks\MediaBlock;
 use Goldfinch\JSONEditor\ORM\FieldType\DBJSONText;
-use Goldfinch\ImageEditor\Forms\EditableUploadField;
-use Goldfinch\ImageEditor\Forms\EditableSortableUploadField;
 
 class MediaSegment extends DataObject
 {
@@ -53,25 +48,82 @@ class MediaSegment extends DataObject
         'Type' => 'Type',
     ];
 
-    // private static $belongs_to = [];
-    // private static $belongs_many_many = [];
+    public function harvest(Harvest $harvest)
+    {
+        $harvest->require(['Title']);
 
-    // private static $default_sort = null;
-    // private static $indexes = null;
-    // private static $casting = [];
-    // private static $defaults = [];
+        $harvest->fields([
+            'Root.Main' => [
+                $harvest->dropdown('Type', 'Type', $this->getSegmentListOfTypes()),
+                $imageField = $harvest->wrapper(
+                    ...$harvest->media('Image'),
+                ),
+                $imagesField = $harvest->wrapper(
+                    ...$harvest->mediaSortable('Images'),
+                ),
+            ],
+        ]);
 
-    // private static $field_labels = [];
-    // private static $searchable_fields = [];
+        if ($this->ID && $this->Type)
+        {
+            $schemaParamsPath = BASE_PATH . '/app/_schema/' . 'media-' . $this->Type . '.json';
 
-    // private static $cascade_deletes = [];
-    // private static $cascade_duplicates = [];
+            if (file_exists($schemaParamsPath))
+            {
+                $schemaParams = file_get_contents($schemaParamsPath);
 
-    // * goldfinch/helpers
-    // private static $field_descriptions = [];
-    private static $required_fields = [
-        'Title',
-    ];
+                $harvest->fields(['Root.Main' => [
+                    $harvest->json('Parameters', null, [], '{}', null, $schemaParams),
+                ]]);
+            }
+        }
+
+        $i = 0;
+        foreach ($this->getSegmentListOfTypes('image') as $key => $state)
+        {
+            if ($state)
+            {
+                if ($i === 0)
+                {
+                    $imageField = $imageField->displayIf('Type')->isEqualTo($key);
+                }
+                else
+                {
+                    $imageField = $imageField->orIf('Type')->isEqualTo($key);
+                }
+                $i++;
+            }
+
+        }
+        if ($i > 0)
+        {
+            $imageField->end();
+        }
+
+        $i = 0;
+        foreach ($this->getSegmentListOfTypes('images') as $key => $state)
+        {
+            if ($state)
+            {
+                if ($i === 0)
+                {
+                    $imagesField = $imagesField->displayIf('Type')->isEqualTo($key);
+                }
+                else
+                {
+                    $imagesField = $imagesField->orIf('Type')->isEqualTo($key);
+                }
+                $i++;
+            }
+        }
+        if ($i > 0)
+        {
+            $imagesField->end();
+        }
+
+        $harvest->dataField('Image')->setFolderName('media');
+        $harvest->dataField('Images')->setFolderName('media');
+    }
 
     public function getSegmentListOfTypes($key = 'label')
     {
@@ -163,105 +215,6 @@ class MediaSegment extends DataObject
         return null;
     }
 
-    public function getCMSFields()
-    {
-        $fields = parent::getCMSFields();
-
-        $fields->removeByName([
-            'Image',
-            'Images',
-            'Parameters',
-        ]);
-
-        $fields->addFieldsToTab(
-            'Root.Main',
-            [
-                DropdownField::create(
-                    'Type',
-                    'Type',
-                    $this->getSegmentListOfTypes(),
-                ),
-                $imageField = Wrapper::create(
-                    ...EditableUploadField::create('Image', 'Image', $fields, $this)->getFields(),
-                ),
-                $imagesField = Wrapper::create(
-                    ...EditableSortableUploadField::create('Images', 'Images', $fields, $this)->getFields(),
-                ),
-            ]
-        );
-
-        if ($this->ID && $this->Type)
-        {
-            $schemaParamsPath = BASE_PATH . '/app/_schema/' . 'media-' . $this->Type . '.json';
-
-            if (file_exists($schemaParamsPath))
-            {
-                $schemaParams = file_get_contents($schemaParamsPath);
-
-                $fields->addFieldsToTab(
-                    'Root.Main',
-                    [
-                        JSONEditorField::create('Parameters', 'Parameters', $this, [], '{}', null, $schemaParams),
-                    ]
-                );
-            }
-        }
-
-        $i = 0;
-        foreach ($this->getSegmentListOfTypes('image') as $key => $state)
-        {
-            if ($state)
-            {
-                if ($i === 0)
-                {
-                    $imageField = $imageField->displayIf('Type')->isEqualTo($key);
-                }
-                else
-                {
-                    $imageField = $imageField->orIf('Type')->isEqualTo($key);
-                }
-                $i++;
-            }
-
-        }
-        if ($i > 0)
-        {
-            $imageField->end();
-        }
-
-        $i = 0;
-        foreach ($this->getSegmentListOfTypes('images') as $key => $state)
-        {
-            if ($state)
-            {
-                if ($i === 0)
-                {
-                    $imagesField = $imagesField->displayIf('Type')->isEqualTo($key);
-                }
-                else
-                {
-                    $imagesField = $imagesField->orIf('Type')->isEqualTo($key);
-                }
-                $i++;
-            }
-        }
-        if ($i > 0)
-        {
-            $imagesField->end();
-        }
-
-        return $fields;
-    }
-
-    // public function validate()
-    // {
-    //     $result = parent::validate();
-
-    //     // $result->addError('Error message');
-
-    //     return $result;
-    // }
-
     public function onBeforeWrite()
     {
         $changed = $this->getChangedFields();
@@ -276,24 +229,4 @@ class MediaSegment extends DataObject
 
         parent::onBeforeWrite();
     }
-
-    // public function canView($member = null)
-    // {
-    //     return Permission::check('CMS_ACCESS_Company\Website\MyAdmin', 'any', $member);
-    // }
-
-    // public function canEdit($member = null)
-    // {
-    //     return Permission::check('CMS_ACCESS_Company\Website\MyAdmin', 'any', $member);
-    // }
-
-    // public function canDelete($member = null)
-    // {
-    //     return Permission::check('CMS_ACCESS_Company\Website\MyAdmin', 'any', $member);
-    // }
-
-    // public function canCreate($member = null, $context = [])
-    // {
-    //     return Permission::check('CMS_ACCESS_Company\Website\MyAdmin', 'any', $member);
-    // }
 }
