@@ -4,12 +4,12 @@ After: "goldfinch/component-media"
 ---
 Goldfinch\Component\Media\Models\Nest\MediaSegment:
   extensions:
-    - {{ namespace }}\MediaSegmentExtension
+    - {{ namespace_root }}MediaSegmentExtension
 
 Goldfinch\Component\Media\Configs\MediaConfig:
   extensions:
-    - {{ namespace }}\MediaConfigExtension
+    - {{ namespace_root }}MediaConfigExtension
 
 Goldfinch\Component\Media\Blocks\MediaBlock:
   extensions:
-    - {{ namespace }}\MediaBlockExtension
+    - {{ namespace_root }}MediaBlockExtension
