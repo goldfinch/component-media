@@ -79,18 +79,10 @@ class ComponentMediaTemplatesCommand extends GeneratorCommand
 
         $fs->copy(
             BASE_PATH .
-                '/vendor/goldfinch/component-media/templates/Goldfinch/Component/Media/Models/Nest/MediaSegment.ss',
+                '/vendor/goldfinch/component-media/templates/Goldfinch/Component/Media/MediaSegment.ss',
             'themes/' .
                 $theme .
-                '/templates/Goldfinch/Component/Media/Models/Nest/MediaSegment.ss',
-        );
-
-        $fs->copy(
-            BASE_PATH .
-                '/vendor/goldfinch/component-media/templates/Goldfinch/Component/Media/Pages/Nest/Media.ss',
-            'themes/' .
-                $theme .
-                '/templates/Goldfinch/Component/Media/Pages/Nest/Media.ss',
+                '/templates/Goldfinch/Component/Media/MediaSegment.ss',
         );
     }
 }
