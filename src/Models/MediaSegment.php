@@ -45,7 +45,7 @@ class MediaSegment extends DataObject
         'Type' => 'Type',
     ];
 
-    public function harvest(Harvest $harvest)
+    public function harvest(Harvest $harvest): void
     {
         $harvest->require(['Title']);
 

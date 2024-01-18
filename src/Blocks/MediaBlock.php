@@ -29,7 +29,7 @@ class MediaBlock extends BaseElement
 
     private static $owns = ['Segment'];
 
-    public function harvest(Harvest $harvest)
+    public function harvest(Harvest $harvest): void
     {
         $harvest->fields([
             'Root.Main' => [$harvest->objectLink('Segment')],
