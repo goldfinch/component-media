@@ -27,17 +27,13 @@ class MediaBlock extends BaseElement
         'Segment' => MediaSegment::class,
     ];
 
-    private static $owns = [
-        'Segment',
-    ];
+    private static $owns = ['Segment'];
 
     public function harvest(Harvest $harvest)
     {
         $harvest->fields([
-            'Root.Main' => [
-                $harvest->objectLink('Segment'),
-            ]
-            ]);
+            'Root.Main' => [$harvest->objectLink('Segment')],
+        ]);
     }
 
     public function getSummary()

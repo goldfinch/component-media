@@ -33,9 +33,7 @@ class ComponentMediaCommand extends GeneratorCommand
         $input = new ArrayInput(['name' => 'MediaBlock']);
         $command->run($input, $output);
 
-        $command = $this->getApplication()->find(
-            'templates:component-media',
-        );
+        $command = $this->getApplication()->find('templates:component-media');
         $input = new ArrayInput([]);
         $command->run($input, $output);
 

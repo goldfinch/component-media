@@ -37,10 +37,7 @@ class MediaSegment extends DataObject
         ],
     ];
 
-    private static $owns = [
-        'Image',
-        'Images',
-    ];
+    private static $owns = ['Image', 'Images'];
 
     private static $summary_fields = [
         'MediaThumbnail' => 'First media',
@@ -54,70 +51,71 @@ class MediaSegment extends DataObject
 
         $harvest->fields([
             'Root.Main' => [
-                $harvest->dropdown('Type', 'Type', $this->getSegmentListOfTypes()),
-                $imageField = $harvest->wrapper(
-                    ...$harvest->media('Image'),
+                $harvest->dropdown(
+                    'Type',
+                    'Type',
+                    $this->getSegmentListOfTypes(),
                 ),
-                $imagesField = $harvest->wrapper(
+                ($imageField = $harvest->wrapper(...$harvest->media('Image'))),
+                ($imagesField = $harvest->wrapper(
                     ...$harvest->mediaSortable('Images'),
-                ),
+                )),
             ],
         ]);
 
-        if ($this->ID && $this->Type)
-        {
-            $schemaParamsPath = BASE_PATH . '/app/_schema/' . 'media-' . $this->Type . '.json';
+        if ($this->ID && $this->Type) {
+            $schemaParamsPath =
+                BASE_PATH . '/app/_schema/' . 'media-' . $this->Type . '.json';
 
-            if (file_exists($schemaParamsPath))
-            {
+            if (file_exists($schemaParamsPath)) {
                 $schemaParams = file_get_contents($schemaParamsPath);
 
-                $harvest->fields(['Root.Main' => [
-                    $harvest->json('Parameters', null, [], '{}', null, $schemaParams),
-                ]]);
+                $harvest->fields([
+                    'Root.Main' => [
+                        $harvest->json(
+                            'Parameters',
+                            null,
+                            [],
+                            '{}',
+                            null,
+                            $schemaParams,
+                        ),
+                    ],
+                ]);
             }
         }
 
         $i = 0;
-        foreach ($this->getSegmentListOfTypes('image') as $key => $state)
-        {
-            if ($state)
-            {
-                if ($i === 0)
-                {
-                    $imageField = $imageField->displayIf('Type')->isEqualTo($key);
-                }
-                else
-                {
+        foreach ($this->getSegmentListOfTypes('image') as $key => $state) {
+            if ($state) {
+                if ($i === 0) {
+                    $imageField = $imageField
+                        ->displayIf('Type')
+                        ->isEqualTo($key);
+                } else {
                     $imageField = $imageField->orIf('Type')->isEqualTo($key);
                 }
                 $i++;
             }
-
         }
-        if ($i > 0)
-        {
+        if ($i > 0) {
             $imageField->end();
         }
 
         $i = 0;
-        foreach ($this->getSegmentListOfTypes('images') as $key => $state)
-        {
-            if ($state)
-            {
-                if ($i === 0)
-                {
-                    $imagesField = $imagesField->displayIf('Type')->isEqualTo($key);
-                }
-                else
-                {
+        foreach ($this->getSegmentListOfTypes('images') as $key => $state) {
+            if ($state) {
+                if ($i === 0) {
+                    $imagesField = $imagesField
+                        ->displayIf('Type')
+                        ->isEqualTo($key);
+                } else {
                     $imagesField = $imagesField->orIf('Type')->isEqualTo($key);
                 }
                 $i++;
             }
         }
-        if ($i > 0)
-        {
+        if ($i > 0) {
             $imagesField->end();
         }
 
@@ -129,9 +127,8 @@ class MediaSegment extends DataObject
     {
         $types = $this->config()->get('segment_types');
 
-        if ($types && count($types))
-        {
-            return array_map(function($n) use ($key) {
+        if ($types && count($types)) {
+            return array_map(function ($n) use ($key) {
                 return $n[$key];
             }, $types);
         }
@@ -143,21 +140,19 @@ class MediaSegment extends DataObject
     {
         $types = $this->config()->get('segment_types');
 
-        if ($types && count($types) && $this->Type && isset($types[$this->Type]))
-        {
-            if ($param)
-            {
-                if (isset($types[$this->Type][$param]))
-                {
+        if (
+            $types &&
+            count($types) &&
+            $this->Type &&
+            isset($types[$this->Type])
+        ) {
+            if ($param) {
+                if (isset($types[$this->Type][$param])) {
                     return $types[$this->Type][$param];
-                }
-                else
-                {
+                } else {
                     return null;
                 }
-            }
-            else
-            {
+            } else {
                 return $types[$this->Type];
             }
         }
@@ -167,48 +162,38 @@ class MediaSegment extends DataObject
 
     public function MediaThumbnail()
     {
-        if ($this->getSegmentTypeConfig('image'))
-        {
-            if ($this->Image()->exists())
-            {
-                return $this->Image()->FitMax(300,150);
+        if ($this->getSegmentTypeConfig('image')) {
+            if ($this->Image()->exists()) {
+                return $this->Image()->FitMax(300, 150);
             }
-        }
-        else if ($this->getSegmentTypeConfig('images'))
-        {
-            if ($this->Images()->exists() && $this->Images()->Count())
-            {
-                return $this->Images()->First()->FitMax(300,150);
+        } elseif ($this->getSegmentTypeConfig('images')) {
+            if ($this->Images()->exists() && $this->Images()->Count()) {
+                return $this->Images()
+                    ->First()
+                    ->FitMax(300, 150);
             }
-        }
-        else
-        {
-            if ($this->Image()->exists())
-            {
-                return $this->Image()->FitMax(300,150);
-            }
-            else if ($this->Images()->exists() && $this->Images()->Count())
-            {
-                return $this->Images()->First()->FitMax(300,150);
+        } else {
+            if ($this->Image()->exists()) {
+                return $this->Image()->FitMax(300, 150);
+            } elseif ($this->Images()->exists() && $this->Images()->Count()) {
+                return $this->Images()
+                    ->First()
+                    ->FitMax(300, 150);
             }
         }
     }
 
     public function RenderSegmentMedia()
     {
-        if ($this->Disabled)
-        {
+        if ($this->Disabled) {
             return;
         }
 
         $partialFile = 'Components/Media/' . $this->Type;
 
-        if (ss_theme_template_file_exists($partialFile))
-        {
+        if (ss_theme_template_file_exists($partialFile)) {
             return $this->Type ? $this->renderWith($partialFile) : null;
-        }
-        else
-        {
+        } else {
             return $this->renderWith('Goldfinch/Component/Media/MediaSegment');
         }
 
@@ -219,10 +204,8 @@ class MediaSegment extends DataObject
     {
         $changed = $this->getChangedFields();
 
-        if (isset($changed['Type']))
-        {
-            if ($changed['Type']['before'] != $changed['Type']['after'])
-            {
+        if (isset($changed['Type'])) {
+            if ($changed['Type']['before'] != $changed['Type']['after']) {
                 $this->Parameters = '';
             }
         }

@@ -19,13 +19,13 @@ class MediaAdmin extends ModelAdmin
 
     private static $managed_models = [
         MediaSegment::class => [
-            'title'=> 'Segments',
+            'title' => 'Segments',
         ],
         MediaBlock::class => [
-            'title'=> 'Blocks',
+            'title' => 'Blocks',
         ],
         MediaConfig::class => [
-            'title'=> 'Settings',
+            'title' => 'Settings',
         ],
     ];
 }
