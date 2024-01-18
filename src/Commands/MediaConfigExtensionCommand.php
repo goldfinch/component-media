@@ -5,10 +5,10 @@ namespace Goldfinch\Component\Media\Commands;
 use Goldfinch\Taz\Console\GeneratorCommand;
 use Symfony\Component\Console\Command\Command;
 
-#[AsCommand(name: 'vendor:component-media-mediaconfig')]
+#[AsCommand(name: 'vendor:component-media:mediaconfig')]
 class MediaConfigExtensionCommand extends GeneratorCommand
 {
-    protected static $defaultName = 'vendor:component-media-mediaconfig';
+    protected static $defaultName = 'vendor:component-media:mediaconfig';
 
     protected $description = 'Create MediaConfig extension';
 

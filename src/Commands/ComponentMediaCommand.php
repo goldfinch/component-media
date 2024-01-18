@@ -16,28 +16,28 @@ class ComponentMediaCommand extends GeneratorCommand
     protected function execute($input, $output): int
     {
         $command = $this->getApplication()->find(
-            'vendor:component-media-mediasegment',
+            'vendor:component-media:mediasegment',
         );
         $input = new ArrayInput(['name' => 'MediaSegment']);
         $command->run($input, $output);
 
         $command = $this->getApplication()->find(
-            'vendor:component-media-mediaconfig',
+            'vendor:component-media:mediaconfig',
         );
         $input = new ArrayInput(['name' => 'MediaConfig']);
         $command->run($input, $output);
 
         $command = $this->getApplication()->find(
-            'vendor:component-media-mediablock',
+            'vendor:component-media:mediablock',
         );
         $input = new ArrayInput(['name' => 'MediaBlock']);
         $command->run($input, $output);
 
-        $command = $this->getApplication()->find('templates:component-media');
+        $command = $this->getApplication()->find('vendor:component-media:templates');
         $input = new ArrayInput([]);
         $command->run($input, $output);
 
-        $command = $this->getApplication()->find('config:component-media');
+        $command = $this->getApplication()->find('vendor:component-media:config');
         $input = new ArrayInput(['name' => 'component-media']);
         $command->run($input, $output);
 
