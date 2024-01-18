@@ -57,12 +57,12 @@ class ComponentMediaTemplatesCommand extends GeneratorCommand
         if (isset($theme) && $theme) {
             $this->copyTemplates($theme);
 
-            $io->text('Done');
+            $io->right('The [component-media] templates have been created');
 
             return Command::SUCCESS;
         }
 
-        return Command::FAILURE;
+        $io->wrong('The [component-media] templates creation failed');
     }
 
     private function copyTemplates($theme)
