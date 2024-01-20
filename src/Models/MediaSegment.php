@@ -2,9 +2,11 @@
 
 namespace Goldfinch\Component\Media\Models;
 
+use Goldfinch\Harvest\Harvest;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
 use Goldfinch\Component\Media\Blocks\MediaBlock;
+use Goldfinch\Component\Media\Configs\MediaConfig;
 use Goldfinch\JSONEditor\ORM\FieldType\DBJSONText;
 
 class MediaSegment extends DataObject
@@ -47,14 +49,16 @@ class MediaSegment extends DataObject
 
     public function harvest(Harvest $harvest): void
     {
-        $harvest->require(['Title']);
+        $harvest->remove(['Parameters']);
+
+        $harvest->require(['Title', 'Type']);
 
         $harvest->fields([
             'Root.Main' => [
                 $harvest->dropdown(
                     'Type',
                     'Type',
-                    $this->getSegmentListOfTypes(),
+                    $this->getSegmentListOfTypes() ?? [],
                 ),
                 ($imageField = $harvest->wrapper(...$harvest->media('Image'))),
                 ($imagesField = $harvest->wrapper(
@@ -86,41 +90,53 @@ class MediaSegment extends DataObject
         }
 
         $i = 0;
-        foreach ($this->getSegmentListOfTypes('image') as $key => $state) {
-            if ($state) {
-                if ($i === 0) {
-                    $imageField = $imageField
-                        ->displayIf('Type')
-                        ->isEqualTo($key);
-                } else {
-                    $imageField = $imageField->orIf('Type')->isEqualTo($key);
+        $imageSegment = $this->getSegmentListOfTypes('image');
+        if ($imageSegment) {
+            foreach ($imageSegment as $key => $state) {
+                if ($state) {
+                    if ($i === 0) {
+                        $imageField = $imageField
+                            ->displayIf('Type')
+                            ->isEqualTo($key);
+                    } else {
+                        $imageField = $imageField->orIf('Type')->isEqualTo($key);
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
-        if ($i > 0) {
-            $imageField->end();
+            if ($i > 0) {
+                $imageField->end();
+            }
         }
 
         $i = 0;
-        foreach ($this->getSegmentListOfTypes('images') as $key => $state) {
-            if ($state) {
-                if ($i === 0) {
-                    $imagesField = $imagesField
-                        ->displayIf('Type')
-                        ->isEqualTo($key);
-                } else {
-                    $imagesField = $imagesField->orIf('Type')->isEqualTo($key);
+        $imagesSegment = $this->getSegmentListOfTypes('images');
+        if ($imagesSegment) {
+            foreach ($imagesSegment as $key => $state) {
+                if ($state) {
+                    if ($i === 0) {
+                        $imagesField = $imagesField
+                            ->displayIf('Type')
+                            ->isEqualTo($key);
+                    } else {
+                        $imagesField = $imagesField->orIf('Type')->isEqualTo($key);
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
-        if ($i > 0) {
-            $imagesField->end();
+            if ($i > 0) {
+                $imagesField->end();
+            }
         }
 
         $harvest->dataField('Image')->setFolderName('media');
         $harvest->dataField('Images')->setFolderName('media');
+
+        $cfg = MediaConfig::current_config();
+
+        if (!class_exists('DNADesign\Elemental\Models\BaseElement')) {
+            $harvest->remove('Blocks');
+        }
     }
 
     public function getSegmentListOfTypes($key = 'label')
