@@ -2,14 +2,20 @@
 Name: app-{{ class }}
 After: "goldfinch/component-media"
 ---
-Goldfinch\Component\Media\Models\MediaSegment:
+Goldfinch\Component\Media\Admin\MediaAdmin:
+  # menu_icon_class: ""
   extensions:
-    - {{ namespace_root_extensions }}MediaSegmentExtension
+    - {{ namespace_root_extensions }}MediaAdminExtension
 
 Goldfinch\Component\Media\Configs\MediaConfig:
   extensions:
     - {{ namespace_root_extensions }}MediaConfigExtension
 
 Goldfinch\Component\Media\Blocks\MediaBlock:
+  # icon: ""
   extensions:
     - {{ namespace_root_extensions }}MediaBlockExtension
+
+Goldfinch\Component\Media\Models\MediaSegment:
+  extensions:
+    - {{ namespace_root_extensions }}MediaSegmentExtension
