@@ -14,7 +14,7 @@ class MediaSegmentExtensionCommand extends GeneratorCommand
 
     protected $path = '[psr4]/Extensions';
 
-    protected $type = 'component-media item extension';
+    protected $type = 'extension';
 
     protected $stub = './stubs/mediasegment-extension.stub';
 

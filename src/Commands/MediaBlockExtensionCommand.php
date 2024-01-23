@@ -14,7 +14,7 @@ class MediaBlockExtensionCommand extends GeneratorCommand
 
     protected $path = '[psr4]/Extensions';
 
-    protected $type = 'component-media block extension';
+    protected $type = 'extension';
 
     protected $stub = './stubs/mediablock-extension.stub';
 

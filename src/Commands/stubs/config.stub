@@ -3,6 +3,7 @@ Name: app-{{ class }}
 After: "goldfinch/component-media"
 ---
 Goldfinch\Component\Media\Admin\MediaAdmin:
+  # menu_priority: 1
   # menu_icon_class: ""
   extensions:
     - {{ namespace_root_extensions }}MediaAdminExtension
@@ -19,3 +20,4 @@ Goldfinch\Component\Media\Blocks\MediaBlock:
 Goldfinch\Component\Media\Models\MediaSegment:
   extensions:
     - {{ namespace_root_extensions }}MediaSegmentExtension
+  segment_types:
