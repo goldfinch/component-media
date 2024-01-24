@@ -2,7 +2,7 @@
 
 namespace Goldfinch\Component\Media\Models;
 
-use Goldfinch\Harvest\Harvest;
+use Goldfinch\Fielder\Fielder;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
 use Goldfinch\Component\Media\Blocks\MediaBlock;
@@ -47,22 +47,22 @@ class MediaSegment extends DataObject
         'Type' => 'Type',
     ];
 
-    public function harvest(Harvest $harvest): void
+    public function fielder(Fielder $fielder): void
     {
-        $harvest->remove(['Parameters']);
+        $fielder->remove(['Parameters']);
 
-        $harvest->require(['Title', 'Type']);
+        $fielder->require(['Title', 'Type']);
 
-        $harvest->fields([
+        $fielder->fields([
             'Root.Main' => [
-                $harvest->dropdown(
+                $fielder->dropdown(
                     'Type',
                     'Type',
                     $this->getSegmentListOfTypes() ?? [],
                 ),
-                ($imageField = $harvest->wrapper(...$harvest->media('Image'))),
-                ($imagesField = $harvest->wrapper(
-                    ...$harvest->mediaSortable('Images'),
+                ($imageField = $fielder->wrapper(...$fielder->media('Image'))),
+                ($imagesField = $fielder->wrapper(
+                    ...$fielder->mediaSortable('Images'),
                 )),
             ],
         ]);
@@ -74,9 +74,9 @@ class MediaSegment extends DataObject
             if (file_exists($schemaParamsPath)) {
                 $schemaParams = file_get_contents($schemaParamsPath);
 
-                $harvest->fields([
+                $fielder->fields([
                     'Root.Main' => [
-                        $harvest->json(
+                        $fielder->json(
                             'Parameters',
                             null,
                             [],
@@ -129,13 +129,13 @@ class MediaSegment extends DataObject
             }
         }
 
-        $harvest->dataField('Image')->setFolderName('media');
-        $harvest->dataField('Images')->setFolderName('media');
+        $fielder->dataField('Image')->setFolderName('media');
+        $fielder->dataField('Images')->setFolderName('media');
 
         $cfg = MediaConfig::current_config();
 
         if (!class_exists('DNADesign\Elemental\Models\BaseElement')) {
-            $harvest->remove('Blocks');
+            $fielder->remove('Blocks');
         }
     }
 

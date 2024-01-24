@@ -2,21 +2,21 @@
 
 namespace Goldfinch\Component\Media\Configs;
 
-use Goldfinch\Harvest\Harvest;
+use Goldfinch\Fielder\Fielder;
 use JonoM\SomeConfig\SomeConfig;
 use SilverStripe\ORM\DataObject;
-use Goldfinch\Harvest\Traits\HarvestTrait;
+use Goldfinch\Fielder\Traits\FielderTrait;
 use SilverStripe\View\TemplateGlobalProvider;
 
 class MediaConfig extends DataObject implements TemplateGlobalProvider
 {
-    use SomeConfig, HarvestTrait;
+    use SomeConfig, FielderTrait;
 
     private static $table_name = 'MediaConfig';
 
     private static $db = [];
 
-    public function harvest(Harvest $harvest): void
+    public function fielder(Fielder $fielder): void
     {
         // ..
     }

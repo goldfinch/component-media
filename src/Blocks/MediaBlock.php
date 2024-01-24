@@ -2,14 +2,14 @@
 
 namespace Goldfinch\Component\Media\Blocks;
 
-use Goldfinch\Harvest\Harvest;
-use Goldfinch\Harvest\Traits\HarvestTrait;
+use Goldfinch\Fielder\Fielder;
+use Goldfinch\Fielder\Traits\FielderTrait;
 use DNADesign\Elemental\Models\BaseElement;
 use Goldfinch\Component\Media\Models\MediaSegment;
 
 class MediaBlock extends BaseElement
 {
-    use HarvestTrait;
+    use FielderTrait;
 
     private static $table_name = 'MediaBlock';
     private static $singular_name = 'Media';
@@ -29,10 +29,10 @@ class MediaBlock extends BaseElement
 
     private static $owns = ['Segment'];
 
-    public function harvest(Harvest $harvest): void
+    public function fielder(Fielder $fielder): void
     {
-        $harvest->fields([
-            'Root.Main' => [$harvest->objectLink('Segment')],
+        $fielder->fields([
+            'Root.Main' => [$fielder->objectLink('Segment')],
         ]);
     }
 
