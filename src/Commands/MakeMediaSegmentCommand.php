@@ -17,6 +17,8 @@ class MakeMediaSegmentCommand extends GeneratorCommand
 
     protected $description = 'Make new media segment';
 
+    protected $no_arguments = true;
+
     protected function execute($input, $output): int
     {
         $io = new InputOutput($input, $output);
