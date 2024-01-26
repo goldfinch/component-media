@@ -12,6 +12,8 @@ class MediaTemplatesCommand extends GeneratorCommand
 
     protected $description = 'Publish [goldfinch/component-media] templates';
 
+    protected $no_arguments = true;
+
     protected function execute($input, $output): int
     {
         $templater = Templater::create($input, $output, $this, 'goldfinch/component-media');
