@@ -51,7 +51,7 @@ class MediaSegment extends DataObject
     {
         $fielder->remove(['Parameters']);
 
-        $fielder->require(['Title', 'Type']);
+        $fielder->required(['Title', 'Type']);
 
         $fielder->fields([
             'Root.Main' => [
