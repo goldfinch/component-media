@@ -3,14 +3,11 @@
 namespace Goldfinch\Component\Media\Blocks;
 
 use Goldfinch\Fielder\Fielder;
-use Goldfinch\Fielder\Traits\FielderTrait;
-use DNADesign\Elemental\Models\BaseElement;
+use Goldfinch\Blocks\Models\BlockElement;
 use Goldfinch\Component\Media\Models\MediaSegment;
 
-class MediaBlock extends BaseElement
+class MediaBlock extends BlockElement
 {
-    use FielderTrait;
-
     private static $table_name = 'MediaBlock';
     private static $singular_name = 'Media';
     private static $plural_name = 'Media';
@@ -34,17 +31,5 @@ class MediaBlock extends BaseElement
         $fielder->fields([
             'Root.Main' => [$fielder->objectLink('Segment')],
         ]);
-    }
-
-    public function getSummary()
-    {
-        return $this->getDescription();
-    }
-
-    public function getType()
-    {
-        $default = $this->i18n_singular_name() ?: 'Block';
-
-        return _t(__CLASS__ . '.BlockType', $default);
     }
 }
