@@ -17,5 +17,5 @@ class MediaConfigExtensionCommand extends GeneratorCommand
 
     protected $stub = './stubs/mediaconfig-extension.stub';
 
-    protected $prefix = 'Extension';
+    protected $suffix = 'Extension';
 }

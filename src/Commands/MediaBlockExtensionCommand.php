@@ -17,5 +17,5 @@ class MediaBlockExtensionCommand extends GeneratorCommand
 
     protected $stub = './stubs/mediablock-extension.stub';
 
-    protected $prefix = 'Extension';
+    protected $suffix = 'Extension';
 }

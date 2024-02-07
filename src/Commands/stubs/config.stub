@@ -20,4 +20,3 @@ Goldfinch\Component\Media\Blocks\MediaBlock:
 Goldfinch\Component\Media\Models\MediaSegment:
   extensions:
     - {{ namespace_root_extensions }}MediaSegmentExtension
-  segment_types:

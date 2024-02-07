@@ -17,5 +17,5 @@ class MediaAdminExtensionCommand extends GeneratorCommand
 
     protected $stub = './stubs/mediaadmin-extension.stub';
 
-    protected $prefix = 'Extension';
+    protected $suffix = 'Extension';
 }

@@ -17,5 +17,5 @@ class MediaSegmentExtensionCommand extends GeneratorCommand
 
     protected $stub = './stubs/mediasegment-extension.stub';
 
-    protected $prefix = 'Extension';
+    protected $suffix = 'Extension';
 }
