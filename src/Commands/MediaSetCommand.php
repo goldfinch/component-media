@@ -17,37 +17,23 @@ class MediaSetCommand extends GeneratorCommand
 
     protected function execute($input, $output): int
     {
-        $command = $this->getApplication()->find(
-            'vendor:component-media:ext:admin',
-        );
-        $input = new ArrayInput(['name' => 'MediaAdmin']);
-        $command->run($input, $output);
+        $command = $this->getApplication()->find('vendor:component-media:ext:admin');
+        $command->run(new ArrayInput(['name' => 'MediaAdmin']), $output);
 
-        $command = $this->getApplication()->find(
-            'vendor:component-media:ext:config',
-        );
-        $input = new ArrayInput(['name' => 'MediaConfig']);
-        $command->run($input, $output);
+        $command = $this->getApplication()->find('vendor:component-media:ext:config');
+        $command->run(new ArrayInput(['name' => 'MediaConfig']), $output);
 
-        $command = $this->getApplication()->find(
-            'vendor:component-media:ext:block',
-        );
-        $input = new ArrayInput(['name' => 'MediaBlock']);
-        $command->run($input, $output);
+        $command = $this->getApplication()->find('vendor:component-media:ext:block');
+        $command->run(new ArrayInput(['name' => 'MediaBlock']), $output);
 
-        $command = $this->getApplication()->find(
-            'vendor:component-media:ext:segment',
-        );
-        $input = new ArrayInput(['name' => 'MediaSegment']);
-        $command->run($input, $output);
+        $command = $this->getApplication()->find('vendor:component-media:ext:segment');
+        $command->run(new ArrayInput(['name' => 'MediaSegment']), $output);
 
         $command = $this->getApplication()->find('vendor:component-media:config');
-        $input = new ArrayInput(['name' => 'component-media']);
-        $command->run($input, $output);
+        $command->run(new ArrayInput(['name' => 'component-media']), $output);
 
         $command = $this->getApplication()->find('vendor:component-media:templates');
-        $input = new ArrayInput([]);
-        $command->run($input, $output);
+        $command->run(new ArrayInput([]), $output);
 
         return Command::SUCCESS;
     }
