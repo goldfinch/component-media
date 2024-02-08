@@ -55,7 +55,7 @@ class MakeMediaSegmentCommand extends GeneratorCommand
                 'name' => 'component-media',
                 '--plain' => true,
                 '--after' => 'goldfinch/component-media',
-                '--namesuffix' => 'app-',
+                '--nameprefix' => 'app-',
             ]), $output);
 
             $config = $this->findYamlConfigFileByName('app-component-media');
