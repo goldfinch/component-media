@@ -4,6 +4,10 @@ Name: goldfinch-component-media
 Goldfinch\Component\Media\Admin\MediaAdmin:
   extensions:
     - Goldfinch\Helpers\Extensions\BlocksAdminExtension
+
+Goldfinch\Component\Media\Blocks\MediaBlock:
+  extensions:
+    - Goldfinch\Helpers\Extensions\BaseElementExtension
 ---
 Name: goldfinch-component-media-icon
 Only:
