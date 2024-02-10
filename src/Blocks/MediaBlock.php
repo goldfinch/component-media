@@ -4,10 +4,13 @@ namespace Goldfinch\Component\Media\Blocks;
 
 use Goldfinch\Fielder\Fielder;
 use DNADesign\Elemental\Models\BaseElement;
+use Goldfinch\Helpers\Traits\BaseElementTrait;
 use Goldfinch\Component\Media\Models\MediaSegment;
 
 class MediaBlock extends BaseElement
 {
+    use BaseElementTrait;
+
     private static $table_name = 'MediaBlock';
     private static $singular_name = 'Media';
     private static $plural_name = 'Media';
