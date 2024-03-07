@@ -2,7 +2,6 @@
 
 namespace Goldfinch\Component\Media\Models;
 
-use Goldfinch\Fielder\Fielder;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
 use Goldfinch\Component\Media\Blocks\MediaBlock;
@@ -47,8 +46,12 @@ class MediaSegment extends DataObject
         'Type' => 'Type',
     ];
 
-    public function fielder(Fielder $fielder): void
+    public function getCMSFields()
     {
+        $fields = parent::getCMSFields();
+
+        $fielder = $fields->fielder($this);
+
         $fielder->remove(['Parameters']);
 
         $fielder->required(['Title', 'Type']);
@@ -137,6 +140,8 @@ class MediaSegment extends DataObject
         if (!class_exists('DNADesign\Elemental\Models\BaseElement')) {
             $fielder->remove('Blocks');
         }
+
+        return $fields;
     }
 
     public function getSegmentListOfTypes($key = 'label')
