@@ -30,7 +30,7 @@ class MediaBlock extends BaseElement
     {
         $fields = parent::getCMSFields();
 
-        $fielder = $fields->fielder($this);
+        $fielder = $this->intFielder($fields)->getFielder();
 
         $fielder->fields([
             'Root.Main' => [$fielder->objectLink('Segment')],
