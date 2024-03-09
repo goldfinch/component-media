@@ -48,9 +48,9 @@ class MediaSegment extends DataObject
 
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
+        $fields = parent::getCMSFields()->initFielder($this);
 
-        $fielder = $this->intFielder($fields)->getFielder();
+        $fielder = $fields->getFielder();
 
         $fielder->remove(['Parameters']);
 
