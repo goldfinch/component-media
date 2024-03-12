@@ -14,7 +14,7 @@ Only:
   moduleexists: "goldfinch/enchantment"
 ---
 Goldfinch\Component\Media\Admin\MediaAdmin:
-  menu_icon_class: "bi-images"
+  menu_icon_class: "bi-rocket-takeoff-fill"
 
 Goldfinch\Component\Media\Blocks\MediaBlock:
-  icon: "bi-images"
+  icon: "bi-rocket-takeoff-fill"
