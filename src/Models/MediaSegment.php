@@ -141,6 +141,8 @@ class MediaSegment extends DataObject
             $fielder->remove('Blocks');
         }
 
+        $this->extend('updateCMSFields', $fields);
+
         return $fields;
     }
 
